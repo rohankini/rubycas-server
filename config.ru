@@ -7,8 +7,8 @@ $: << $APP_ROOT + "/lib"
 
 require File.dirname(File.expand_path(__FILE__)) + '/lib/casserver'
 
-$LOG = Logger.new("casserver.log")
-$LOG.level = Logger::DEBUG
+$LOG = Logger.new($CONF['log']['file'])
+$LOG.level = Logger.module_eval($CONF['log']['level'].upcase, __FILE__, __LINE__)
 
 CASServer.create
 
