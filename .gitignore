@@ -6,3 +6,5 @@
 *.pidaproject
 *.log
 *.mo
+.emacs_project
+TAGS

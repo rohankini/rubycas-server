@@ -101,6 +101,7 @@ module CASServer::Models
         create_table :casserver_ticket_granting_tickets, :force => true do |t|
           t.column :ticket,     :string,    :null => false
           t.column :created_on, :timestamp, :null => false
+          t.column :updated_on, :timestamp, :null => false
           t.column :client_hostname, :string, :null => false
           t.column :username,   :string,    :null => false
         end
