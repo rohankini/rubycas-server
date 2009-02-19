@@ -8,3 +8,5 @@ config.yml
 *.log
 *.mo
 pkg
+.emacs_project
+TAGS
