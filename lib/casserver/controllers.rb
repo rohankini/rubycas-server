@@ -23,7 +23,7 @@ module CASServer::Controllers
       @renew = @input['renew']
       @gateway = @input['gateway'] == 'true' || @input['gateway'] == '1'
       
-      if tgc = @cookies[:tgt]
+      if tgc = @cookies.tgt
         tgt, tgt_error = validate_ticket_granting_ticket(tgc)
       end
       
@@ -169,15 +169,15 @@ module CASServer::Controllers
         end
         
         if $CONF.expire_sessions
-          @cookies[:tgt] = {
+          @cookies.tgt = {
             :value => tgt.to_s, 
             :expires => Time.now + $CONF.ticket_granting_ticket_expiry
           }
         else
-          @cookies[:tgt] = tgt.to_s
+          @cookies.tgt = tgt.to_s
         end
         
-        $LOG.debug("Ticket granting cookie '#{@cookies[:tgt].inspect}' granted to '#{@username.inspect}'. #{expiry_info}")
+        $LOG.debug("Ticket granting cookie '#{@cookies.tgt.inspect}' granted to '#{@username.inspect}'. #{expiry_info}")
                 
         if @service.blank?
           $LOG.info("Successfully authenticated user '#{@username}' at '#{tgt.client_hostname}'. No service param was given, so we will not redirect.")
@@ -222,9 +222,9 @@ module CASServer::Controllers
       
       @gateway = @input['gateway'] == 'true' || @input['gateway'] == '1'
       
-      tgt = CASServer::Models::TicketGrantingTicket.find_by_ticket(@cookies[:tgt])
+      tgt = CASServer::Models::TicketGrantingTicket.find_by_ticket(@cookies.tgt)
       
-      @cookies.delete :tgt
+      @cookies.delete :tgt.to_s
       
       if tgt
         CASServer::Models::TicketGrantingTicket.transaction do
