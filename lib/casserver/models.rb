@@ -101,7 +101,6 @@ module CASServer::Models
         create_table :casserver_ticket_granting_tickets, :force => true do |t|
           t.column :ticket,     :string,    :null => false
           t.column :created_on, :timestamp, :null => false
-          t.column :updated_on, :timestamp, :null => false
           t.column :client_hostname, :string, :null => false
           t.column :username,   :string,    :null => false
         end
@@ -214,6 +213,16 @@ module CASServer::Models
     
     def self.down
       remove_column :casserver_tgt, :extra_attributes
+    end
+  end
+
+  class AddNotionOfSessionTimeout < V 0.73
+    def self.up
+      add_column :casserver_tgt, :updated_on, :timestamp, :null => false
+    end
+
+    def self.down
+      remove_column :casserver_tgt, :updated_on
     end
   end
 end
