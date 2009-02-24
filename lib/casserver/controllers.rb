@@ -296,6 +296,25 @@ module CASServer::Controllers
     end
   end
 
+  # custom
+  class SessionValidate < R '/sessionValidate'
+    include CASServer::CAS
+
+    def get
+      CASServer::Utils::log_controller_action(self.class, @input)
+
+      # required
+      username = @input['user']
+
+      username, @error = validate_ticket_granting_ticket_for_user(username)
+
+      @success = username && !@error
+      @username = username if @success
+      @status = CASServer::Controllers.response_status_from_error(@error) if @error
+      render :validate
+    end
+  end
+
   # 2.5
   class ServiceValidate < R '/serviceValidate'
     include CASServer::CAS
