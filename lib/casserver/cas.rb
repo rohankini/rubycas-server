@@ -155,7 +155,7 @@ module CASServer::CAS
     if username.nil?
       error = "No user given to find a ticket granting ticket."
       $LOG.debug(error)
-    elsif tgt = TicketGrantingTicket.find_by_username(username)
+    elsif tgt = TicketGrantingTicket.find(:first, :conditions => { :name => username}, :order => "desc created_on", :limit => 1)
       error = validate_tgt(tgt)
     else
       error = "Invalid ticket granting ticket '#{ticket}' (no matching ticket found in the database)."

@@ -310,7 +310,7 @@ module CASServer::Controllers
 
       @success = username && !@error
       @username = username if @success
-      @status = CASServer::Controllers.response_status_from_error(@error) if @error
+      @status = @success ? 200 : 401
       render :validate
     end
   end
