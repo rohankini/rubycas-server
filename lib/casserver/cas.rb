@@ -325,10 +325,19 @@ module CASServer::CAS
   end
   module_function :clean_service_url
 
+  def invalidate_tgt_session! ticket
+    tgt = TicketGrantingTicket.find_by_ticket(ticket)
+    tgt.update_atttibute(:invalid, true)
+    $LOG.info "TGT #{ticket} invalidated."
+  end
+
   private
   def validate_tgt tgt
     ticket = tgt.ticket
-    if $CONF.expire_sessions && Time.now - tgt.created_on > $CONF.ticket_granting_ticket_expiry
+    if tgt.invalid?
+      error = "Your tgt -> #{ticket} has been invalidated."
+      $LOG.info "TGT => #{ticket} found invalid, validation failed."
+    elsif $CONF.expire_sessions && Time.now - tgt.created_on > $CONF.ticket_granting_ticket_expiry
       error = "Your session has expired. Please log in again."
       $LOG.info("Ticket granting ticket '#{ticket}' for user '#{tgt.username}' expired.")
     elsif $CONF.session_timeout && Time.now - tgt.updated_on > $CONF.session_timeout
