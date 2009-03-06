@@ -168,6 +168,8 @@ module CASServer::Controllers
           expiry_info = " It will not expire."
         end
 
+        (existing_tgt = cookies['tgt']) && invalidate_tgt_session!(existing_tgt)
+
         if $CONF.maximum_session_lifetime
           cookies['tgt'] = {
             :value => tgt.to_s,

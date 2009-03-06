@@ -261,6 +261,16 @@ module CASServer::Models
     end
   end
 
+  class AddNotionOfInvalidity < V 0.74
+    def self.up
+      add_column :casserver_tgt, :invalid, :boolean
+    end
+
+    def self.down
+      remove_column :casserver_tgt, :invalid
+    end
+  end
+
   class RenamePgtForeignKeys < V 0.80
     def self.up
       rename_column :casserver_st,  :proxy_granting_ticket_id,  :granted_by_pgt_id
