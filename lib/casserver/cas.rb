@@ -327,6 +327,7 @@ module CASServer::CAS
 
   def invalidate_tgt_session! ticket
     tgt = TicketGrantingTicket.find_by_ticket(ticket)
+    tgt || return
     tgt.update_attribute(:invalid, true)
     $LOG.info "TGT #{ticket} invalidated."
   end
