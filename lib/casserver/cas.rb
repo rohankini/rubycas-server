@@ -341,7 +341,7 @@ module CASServer::CAS
     elsif $CONF.expire_sessions && Time.now - tgt.created_on > $CONF.ticket_granting_ticket_expiry
       error = "Your session has expired. Please log in again."
       $LOG.info("Ticket granting ticket '#{ticket}' for user '#{tgt.username}' expired.")
-    elsif $CONF.session_timeout && Time.now - tgt.updated_on > $CONF.session_timeout
+    elsif $CONF.inactivity_timeout && Time.now - tgt.updated_on > $CONF.inactivity_timeout
       error = "Your session has timed-out. Please log in again."
       $LOG.info("Ticket granting ticket '#{ticket}' for user '#{tgt.username}' timed-out.")
     else
