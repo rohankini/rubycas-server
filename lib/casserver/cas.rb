@@ -338,7 +338,7 @@ module CASServer::CAS
     if tgt.invalid?
       error = "Your tgt -> #{ticket} has been invalidated."
       $LOG.info "TGT => #{ticket} found invalid, validation failed."
-    elsif $CONF.expire_sessions && Time.now - tgt.created_on > $CONF.ticket_granting_ticket_expiry
+    elsif $CONF.expire_sessions && Time.now - tgt.created_on > $CONF.max_session_length
       error = "Your session has expired. Please log in again."
       $LOG.info("Ticket granting ticket '#{ticket}' for user '#{tgt.username}' expired.")
     elsif $CONF.inactivity_timeout && Time.now - tgt.updated_on > $CONF.inactivity_timeout

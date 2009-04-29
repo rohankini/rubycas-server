@@ -427,12 +427,18 @@ log:
 # server startup if they are this many seconds old. (Defaults to 48 hours)
 
 #proxy_granting_ticket_expiry: 172800
-#ticket_granting_ticket_expiry: 172800
+# Max session length is ticket granting ticket expiry
+#max_session_length: 172800
 
 # If you would prefer that ticket-granting ticket expiry be enforced (in effect 
 # limiting the maximum length of a session), you can set expire_sessions to true.
 
 #expire_sessions: false
+
+# Inactivity_timeout is to be used to set timeout for a cas session
+# it usually makes sense only when cas is being used to validate user's session consistency
+# on every request.
+#inactivity_timeout: 1800
 
 
 # If you want the usernames entered on the login page to be automatically 

@@ -4,7 +4,7 @@ conf_defaults = {
   :login_ticket_expiry => 5.minutes,
   :service_ticket_expiry => 5.minutes, # CAS Protocol Spec, sec. 3.2.1 (recommended expiry time)
   :proxy_granting_ticket_expiry => 48.hours,
-  :ticket_granting_ticket_expiry => 48.hours,
+  :max_session_length => 48.hours,
   :log => {:file => 'casserver.log', :level => 'DEBUG'},
   :uri_path => "/"
 }

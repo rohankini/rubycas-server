@@ -30,6 +30,6 @@ def CASServer.create
   CASServer::Models::ServiceTicket.cleanup_expired($CONF[:service_ticket_expiry])
   CASServer::Models::LoginTicket.cleanup_expired($CONF[:login_ticket_expiry])
   CASServer::Models::ProxyGrantingTicket.cleanup_expired($CONF[:proxy_granting_ticket_expiry])
-  CASServer::Models::TicketGrantingTicket.cleanup_expired($CONF[:ticket_granting_ticket_expiry])
+  CASServer::Models::TicketGrantingTicket.cleanup_expired($CONF[:max_session_length])
 end
 

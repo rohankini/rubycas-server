@@ -162,7 +162,7 @@ module CASServer::Controllers
         tgt = generate_ticket_granting_ticket(@username, extra_attributes)
 
         if $CONF.expire_sessions
-          expires = $CONF.ticket_granting_ticket_expiry.to_i.from_now
+          expires = $CONF.max_session_length.to_i.from_now
           expiry_info = " It will expire on #{expires}."
         else
           expiry_info = " It will not expire."
@@ -173,7 +173,7 @@ module CASServer::Controllers
         if $CONF.expire_sessions
           @cookies.tgt = {
             :value => tgt.to_s,
-            :expires => Time.now + $CONF.ticket_granting_ticket_expiry
+            :expires => Time.now + $CONF.max_session_length
           }
         else
           @cookies.tgt = tgt.to_s
