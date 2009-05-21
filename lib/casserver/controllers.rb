@@ -27,9 +27,8 @@ module CASServer::Controllers
         tgt, tgt_error = validate_ticket_granting_ticket(tgc)
       end
 
-      if tgt and !tgt_error
-        @message = {:type => 'notice',
-          :message => _("You are currently logged in as '%s'. If this is not you, please log in below.") % tgt.username }
+      if tgt
+        @message = {:type => 'notice', :message => _(tgt_error || "You are currently logged in as '%s'. If this is not you, please log in below.") % tgt.username }
       end
 
       if input['redirection_loop_intercepted']
@@ -199,7 +198,7 @@ module CASServer::Controllers
         end
       else
         $LOG.warn("Invalid credentials given for user '#{@username}'")
-        @message = {:type => 'mistake', :message => _("Incorrect username or password.")}
+        @message = {:type => 'mistake', :message => _("Sorry the username and/or password you entered is invalid. Please note after 5 attempts your account will be locked.")}
         @status = 401
       end
 
