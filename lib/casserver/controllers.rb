@@ -198,7 +198,7 @@ module CASServer::Controllers
         end
       else
         $LOG.warn("Invalid credentials given for user '#{@username}'")
-        @message = {:type => 'mistake', :message => _("Sorry the username and/or password you entered is invalid. Please note after 5 attempts your account will be locked.")}
+        @message = {:type => 'mistake', :message => _("Incorrect username or password.")}
         @status = 401
       end
 
